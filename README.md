@@ -1,2 +1,1 @@
-# SimplePDO
-Query Builder
+## Installation and using will be there (soon)
