@@ -56,6 +56,10 @@ class Order extends Model{
     }
 }
 ```
+
+## Other usages in examples.php
+
+
 ## Authors
 - [@TurgunboyevUz](https://www.github.com/TurgunboyevUz/)
 
