@@ -6,7 +6,9 @@ class Autoloader{
         require __DIR__."/Database.php";
         require __DIR__."/Model.php";
 
-        $prefix = $prefix."\\";
+        if(!empty($prefix)){
+            $prefix = $prefix."\\";   
+        }
 
         spl_autoload_register(function($class) use($models, $prefix){
             if(!in_array($class, [
