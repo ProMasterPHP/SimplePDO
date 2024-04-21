@@ -21,11 +21,13 @@ class Order extends Model{
     }
 
     public static function seed(){
+        $status = ['Processing', 'Shipped', 'Delivered'];
+
         for($i = 0; $i < 10; $i++){
             self::insert([
                 'user_id' => rand(10000, 99999),
                 'product_id' => rand(10, 100),
-                'status' => 'Processing'
+                'status' => $status[rand(0, 2)]
             ]);
         }
     }
