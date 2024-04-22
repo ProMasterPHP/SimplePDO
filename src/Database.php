@@ -7,7 +7,8 @@ use Exception;
 class Database
 {
     protected $stmt, $conn;
-    public $table, $where;
+    public $table = '';
+    public $where = [];
     public static $database;
     public function __construct(PDO $connection, $table)
     {
@@ -81,7 +82,7 @@ class Database
             $value = $values;
         }
         
-        $query = "SELECT ".implode(', ', $values)." FROM `{$this->table}`";
+        $query = "SELECT ".$value." FROM `{$this->table}`";
 
         if(!empty($where)){
             $query .= " WHERE " . $this->prepareWhereParams($where);
@@ -134,7 +135,7 @@ class Database
         $where = !empty($where) ? $where : $this->where;
 
         if(!empty($where)){
-            $query .= " WHERE " . $this->prepareWhereParams($where);   
+            $query .= " WHERE " . $this->prepareWhereParams($where);
         }
 
         $query .= ";";
