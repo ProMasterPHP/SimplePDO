@@ -1,5 +1,5 @@
 
-# SimplePDO (Query Builder based on structure of Eloquent ORM)
+# SPDO - SimplePDO (Query Builder based on structure of Eloquent ORM)
 
 
 ## Installation
@@ -10,45 +10,40 @@
   rm -rf SimplePDO
 ```
 
-## Add your configs to config.php
+## Add your configs to src/Config/database.php
 ```php
-require "src/Autoloader.php";
+return [
+    'driver' => 'mysql', // mysql, pgsql, sqlite
 
-Autoloader::boot(Autoloader::find('Model')); //Model -> model fayllari joylashgan direktoriya (default - Model)
-
-use TurgunboyevUz\SimplePDO\Database;
-
-$sql = [
-    'dbuser'=>'', // your database username
-    'dbpass'=>'', // your database password
-    'dbname'=>'' // your database name
+    'host' => 'localhost', // default: localhost
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8',
+    
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => ''
 ];
-
-Database::connect('mysql', [
-    'host' => 'localhost',
-    'port'=>3306,
-    'charset' => 'utf8mb4',
-    'dbname' => $sql['dbname'],
-], $sql['dbuser'], $sql['dbpass']);
 ```
 ## Usage/Examples
 
-## Create new model (Example - Model/Order.php)
+## Defining new model (to folder src/Model)
 ```php
-use TurgunboyevUz\SimplePDO\Model;
+namespace TurgunboyevUz\SPDO\Model;
 
-class Order extends Model{
-    protected static $table = 'orders'; //model javob beradigan table nomi (required)
-    
+use TurgunboyevUz\SPDO\Core\Model;
+
+class User extends Model{
+    protected static $table = 'users';
+
     public static function up(){
-        return self::query("CREATE TABLE `orders` (
-            id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            user_id BIGINT NOT NULL,
-            product_id INT(11) NOT NULL,
-            status VARCHAR(255) NOT NULL,
-            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );");
+        return self::query("CREATE TABLE IF NOT EXISTS `users` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) NOT NULL,
+            `email` varchar(255) NOT NULL,
+            `password` varchar(255) NOT NULL,
+
+            PRIMARY KEY (`id`)
+        )");
     }
 
     public static function down(){
@@ -57,12 +52,20 @@ class Order extends Model{
 }
 ```
 
-## Other usages in examples.php
+## Defining new controller (to folder src/Controller)
 
+```php
+namespace TurgunboyevUz\SPDO\Controller;
 
+use TurgunboyevUz\SPDO\Model\User;
+
+class UserC{
+    // working with model should be there
+}
+```
 ## Authors
 - [@TurgunboyevUz](https://www.github.com/TurgunboyevUz/)
 
 ## License
 
-- [MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/)
