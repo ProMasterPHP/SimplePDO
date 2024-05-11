@@ -26,6 +26,10 @@ trait QueryExecutor{
         return $this->build()->query($this->queryString, $this->params);
     }
 
+    public function exists(){
+        return $this->count() > 0;
+    }
+
     public function get(){
         if($this->count() == 0){
             return false;
