@@ -41,7 +41,7 @@ class Model{
     }
 
     public static function all(){
-        return self::db()->select('*')->getAll();
+        return self::db()->select('*');
     }
 
     public static function find($id){
