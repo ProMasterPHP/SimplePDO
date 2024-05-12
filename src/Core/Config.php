@@ -1,32 +1,30 @@
 <?php
 namespace TurgunboyevUz\SPDO\Core;
 
-class Config{
-    public static $config = [];
+class Config {
+    private static $config = [];
 
-    public static function load($folder){
-        $files = glob($folder."/*.php");
+    public static function load($dir) {
+        $files = glob("$dir/*.php");
 
-        foreach ($files as $filename) {
-            $file = str_replace('.php', '', $filename);
-            $ex = explode('/', $file);
-
-            $config_name = end($ex);
-
-            self::$config[$config_name] = require $filename;
+        foreach ($files as $file) {
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            self::$config[$name] = require $file;
         }
     }
 
-    public static function set($key, $value){
-        $key = explode('.', $key);
+    public static function get($key, $default = null) {
+        $keys = explode('.', $key);
+        $config = self::$config;
 
-        self::$config[$key[0]][$key[1]] = $value;
-    }
+        foreach ($keys as $segment) {
+            if (!is_array($config) || !array_key_exists($segment, $config)) {
+                return $default;
+            }
 
-    public static function get($key, $default = null){
-        $key = explode('.', $key);
+            $config = $config[$segment];
+        }
 
-        return self::$config[$key[0]][$key[1]] ?? $default;
+        return $config;
     }
 }
-?>
