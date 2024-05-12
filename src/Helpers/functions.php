@@ -1,6 +1,8 @@
 <?php
 
 use TurgunboyevUz\SPDO\Core\Config;
+use TurgunboyevUz\SPDO\Core\Validator;
+
 function dd(...$args): void
 {
     echo "<pre>";
@@ -20,4 +22,8 @@ function pd(...$args): void
 
 function config($key, $default = null){
     return Config::get($key, $default);
+}
+
+function validate($data){
+    return new Validator($data);
 }
