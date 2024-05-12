@@ -26,6 +26,10 @@ trait QueryExecutor{
         return $this->build()->query($this->queryString, $this->params);
     }
 
+    public function toSQL(){
+        return $this->build()->queryString;
+    }
+
     public function exists(){
         return $this->count() > 0;
     }
